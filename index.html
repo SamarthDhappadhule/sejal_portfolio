@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aurora Lens - Photography Portfolio</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+      
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --color-dark: #121212;
+            --color-light: #f4f4f4;
+            --color-accent: #e59a5a; 
+            --color-text: #bdbdbd;
+            --max-width: 1200px;
+            --header-height: 80px;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--color-dark);
+            color: var(--color-text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        a {
+            color: var(--color-light);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--color-accent);
+        }
+
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: var(--header-height);
+            background-color: rgba(18, 18, 18, 0.95);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%;
+            margin-top: 20px;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--color-accent);
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+        }
+
+        .nav-links a {
+            font-weight: 600;
+            text-transform: uppercase;
+            padding: 5px 0;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--color-accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 30px;
+            height: 25px;
+            background: transparent;
+            border: none;
+            padding: 0;
+        }
+
+        .menu-toggle .bar {
+            width: 100%;
+            height: 3px;
+            background-color: var(--color-light);
+            transition: all 0.3s linear;
+            transform-origin: 1px;
+        }
+
+        #hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: url('backgrround.jpg') center center/cover no-repeat;
+            position: relative;
+        }
+
+        #hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5); /* Dark overlay */
+        }
+
+        .hero-content {
+            z-index: 1;
+        }
+
+        .hero-content h1 {
+            font-size: 4.5rem;
+            font-weight: 700;
+            color: var(--color-light);
+            margin-bottom: 20px;
+            letter-spacing: 3px;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+            /* Initial state for animation */
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInRise 1s ease-out 0.5s forwards;
+        }
+
+        .hero-content p {
+            font-size: 1.5rem;
+            font-weight: 300;
+            color: var(--color-light);
+            margin-bottom: 40px;
+            /* Initial state for animation */
+            opacity: 0;
+            animation: fadeInRise 1s ease-out 1s forwards;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--color-accent);
+            color: rgb(222, 216, 216);
+            padding: 12px 30px;
+            border-radius: 5px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background-color: #201f1f;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 15px rgba(229, 154, 90, 0.4);
+            /* Initial state for animation */
+            opacity: 0;
+            animation: fadeInRise 1s ease-out 1.5s forwards;
+        }
+
+        .btn:hover {
+            background-color: #000000;
+            transform: translateY(-2px);
+             transition:  0.3s ease, transform 0.2s ease;
+            color:white;
+        }
+
+        /* --- Section General Styling --- */
+        section {
+            padding: 100px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 60px;
+            color: var(--color-light);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            background-color: var(--color-accent);
+            margin: 10px auto 0;
+        }
+
+        /* --- About Section --- */
+        #about {
+            background-color: #1c1c1c;
+        }
+
+        .about-content {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .about-image {
+            flex: 1;
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            transition: transform 0.5s ease;
+        }
+        
+        .about-image img:hover {
+            transform: scale(1.02);
+        }
+
+        .about-text {
+            flex: 2;
+        }
+
+        .about-text h3 {
+            font-size: 1.8rem;
+            color: var(--color-accent);
+            margin-bottom: 15px;
+        }
+
+        .about-text p {
+            margin-bottom: 20px;
+            font-size: 1rem;
+            color: var(--color-text);
+        }
+
+        /* --- Portfolio Section (Gallery) --- */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .portfolio-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+            cursor: pointer;
+            /* Initial state for JavaScript scroll animation */
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        
+        /* Class added by JS when element is visible */
+        .portfolio-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .portfolio-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+
+        .portfolio-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .portfolio-item:hover .overlay {
+            opacity: 1;
+        }
+
+        .overlay h4 {
+            color: var(--color-light);
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .overlay p {
+            color: var(--color-accent);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        /* --- Contact Section --- */
+        #contact {
+            background-color: #1c1c1c;
+        }
+
+        .contact-content {
+            display: flex;
+            justify-content: center;
+        }
+
+        .contact-form {
+            width: 100%;
+            max-width: 600px;
+            padding: 30px;
+            background: var(--color-dark);
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .contact-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--color-light);
+        }
+
+        .contact-form input[type="text"],
+        .contact-form input[type="email"],
+        .contact-form textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #333;
+            border-radius: 4px;
+            background-color: #222;
+            color: var(--color-light);
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            border-color: var(--color-accent);
+            outline: none;
+        }
+
+        .contact-form textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .contact-form button {
+            width: 100%;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .contact-form .btn {
+            width: 100%;
+            display: block; /* Ensure it takes full width */
+            text-align: center;
+        }
+
+        /* --- Footer --- */
+        footer {
+            padding: 30px 0;
+            background-color: #0d0d0d;
+            text-align: center;
+            font-size: 0.9rem;
+            border-top: 1px solid #333;
+        }
+
+        /* --- CSS Animations --- */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInRise {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* --- Responsive Design (Media Queries) --- */
+        
+        /* Tablet & Mobile Layout */
+        @media (max-width: 768px) {
+            
+            .navbar {
+                padding: 0 0px;
+            }
+            a{
+                cursor: none;
+            }
+            
+            /* Show the menu button */
+            .menu-toggle {
+                display: flex;
+            }
+
+            .nav-links {
+                /* Initially hidden off-screen */
+                position: fixed;
+                top: 0;
+                right: 0;
+                height: 100vh;
+                width: 70%;
+                background-color: var(--color-dark);
+                flex-direction: column;
+                padding-top: var(--header-height);
+                transform: translateX(100%);
+                transition: transform 0.4s ease-in-out;
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.7);
+            }
+
+            /* State when menu is open */
+            .nav-links.active {
+                transform: translateX(0);
+            }
+
+            .nav-links li {
+                margin: 0;
+                border-bottom: 1px solid #222;
+            }
+
+            .nav-links a {
+                display: block;
+                padding: 15px 30px;
+                text-align: left;
+                width: 100%;
+            }
+            
+            /* Remove underline effect on mobile for cleaner look */
+            .nav-links a::after {
+                display: none;
+            }
+
+            /* Toggle animation for the Hamburger icon */
+            .menu-toggle.active .bar:nth-child(2) {
+                opacity: 0;
+            }
+
+            .menu-toggle.active .bar:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 6px);
+            }
+
+            .menu-toggle.active .bar:nth-child(3) {
+                transform: rotate(-45deg) translate(5px, -6px);
+            }
+
+            /* Hero Section adjustments */
+            .hero-content h1 {
+                font-size: 3rem;
+            }
+
+            .hero-content p {
+                font-size: 1.2rem;
+            }
+            
+            /* General section adjustments */
+            section {
+                padding: 60px 0;
+            }
+            
+            .section-title {
+                font-size: 2.5rem;
+                margin-bottom: 40px;
+            }
+            
+            /* About Section adjustments */
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .about-image {
+                max-width: 80%;
+                margin: 0 auto 30px;
+            }
+            
+            /* Portfolio Grid adjustments */
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            /* Contact Form adjustments */
+            .contact-form {
+                padding: 20px;
+            }
+        }
+        
+        /* Smaller Mobile Screens */
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.5rem;
+            }
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            .hero-content p {
+                font-size: 1rem;
+            }
+            .btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Header & Navigation -->
+    <header id="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="#hero" class="logo">Sejal Chaukwale</a>
+                
+                <ul class="nav-links">
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#portfolio">Portfolio</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                
+                <button class="menu-toggle" aria-label="Toggle Navigation">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 1. Hero Section (Animated) -->
+    <section id="hero">
+        <div class="hero-content">
+            <h1>Capturing Moments, Creating Art</h1>
+            <p>Fine Art, Documentary, and Commercial Photography</p>
+            <a href="#portfolio" class="btn">View Portfolio</a>
+        </div>
+    </section>
+
+    <!-- 2. About Section -->
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-content">
+                <div class="about-image">
+                    <img src="sejal.png" alt="Photographer portrait with a camera" loading="lazy">
+                </div>
+                <div class="about-text">
+                    <h3>Hello , I'm Sejal ...</h3>
+                    <p>
+                        A G.D. Art graduate, photographer, cinematographer, and visual storyteller. My creative journey began in childhood, where I found peace in colors and brushstrokes. What started as painting soon evolved into capturing life through the lensturning moments, emotions, and stories into timeless visuals.
+
+                        <!-- With over ten years behind the lens, my work is driven by a passion for light, shadow, and the stories they tell. I specialize in cinematic portraiture and evocative landscapes, using minimal editing to preserve the genuine emotion of the moment. -->
+                    </p>
+                    <p>
+                        Over the last six years, I’ve worked professionally in portrait photography, travel stories, cinematography, and social media content creation. With my fine arts background, I bring an artistic eye to every frame balancing light, composition, and emotion to create visuals that truly connect.
+
+                        <!-- My philosophy is simple: photography should not just document, but elevate the ordinary into the extraordinary. Whether it's a dramatic mountain range or an intimate wedding moment, I aim to create images that resonate deeply and stand the test of time. -->
+                    </p>
+                    <p>
+
+                        I believe photography and film are not just about capturing what you see, but about expressing what you feel. Every portrait, every travel frame, every cinematic moment carries a piece of the story behind it—and my mission is to tell those stories in the most authentic and impactful way.
+
+                    </p>
+
+
+
+                    <a href="#contact" class="btn">Book a Session</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- <div class="image" style="display: flex; justify-content: center;">
+        <img src="Screenshot 2025-09-28 163711.png" style="width:90vw; height:100vh;">
+    </div> -->
+
+    <!-- 3. Portfolio Section (Scroll Reveal Animated) -->
+    <section id="portfolio">
+        <div class="container">
+            <h2 class="section-title">Portfolio</h2>
+            <div class="portfolio-grid">
+                
+                <!-- Item 1: Animated on Scroll -->
+                <div class="portfolio-item">
+                  <a href="nature.html">  
+                    <img src="nature.jpg" alt="Cityscape photography" loading="lazy">
+                    <div class="overlay">
+                        <!-- <h4>Urban Echoes</h4> -->
+                        <p>Nature</p>
+                    </div>
+                    </a>
+                </div>
+                
+                <!-- Item 2: Animated on Scroll -->
+                <div class="portfolio-item">
+                    <a href="potrait.html"> 
+                    <img src="potrait.jpg" alt="Portrait photography" loading="lazy">
+                    <div class="overlay">
+                        <!-- <h4>Quiet Gaze</h4> -->
+                        <p>Portraits</p>
+                    </div>
+                    </a>
+                </div>
+
+                <!-- Item 3: Animated on Scroll -->
+                <div class="portfolio-item">
+                    <a href="marketing.html"> 
+                    <img src="marketing.jpg" alt="Wildlife photography" loading="lazy">
+                    <div class="overlay">
+                        <!-- <h4>Untamed Spirit</h4> -->
+                        <p>Marketing</p>
+                    </div>
+                    </a>
+                </div>
+                
+                <!-- Item 4: Animated on Scroll -->
+                <div class="portfolio-item">
+                     <a href="pantings.html"> 
+                    <img src="paintings.jpg" alt="Landscape photography" loading="lazy">
+                    <div class="overlay">
+                        <!-- <h4>Mountain Drama</h4> -->
+                        <p>Paintings</p>
+                    </div>
+                    </a>
+                </div>
+                
+                <!-- Item 5: Animated on Scroll -->
+                <div class="portfolio-item">
+                     <a href="cinematography.html"> 
+                    <!-- <img src="https://placehold.co/600x400/7c7c7c/f4f4f4?text=Abstract" alt="Abstract photography" loading="lazy"> -->
+                     <video width="385" height="390px" autoplay muted loop>
+    <source src="cinematography.mp4" type="video/mp4" style=" object-fit:fill;">
+    <!-- Your browser does not support the video tag. -->
+  </video>
+
+                    <div class="overlay">
+                        <!-- <h4>Form & Texture</h4> -->
+                        <p>Cinematography</p>
+                    </div>
+                    </a>
+                </div>
+
+                <!-- Item 6: Animated on Scroll -->
+                <div class="portfolio-item">
+                     <a href="achivements.html"> 
+                    <img src="achivement.jpg" alt="Event photography" loading="lazy">
+                    <div class="overlay">
+                        <!-- <h4>The Celebration</h4> -->
+                        <p>Achivements</p>
+                    </div>
+                    </a>
+                </div>
+
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Contact Section -->
+    <!-- <section id="contact">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="contact-content">
+                <form class="contact-form" action="#" method="POST">
+                    <p style="text-align: center; margin-bottom: 25px;">Ready to capture your story? Send a message.</p>
+                    
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required placeholder="Your Name">
+
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required placeholder="your.email@example.com">
+
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" required placeholder="Tell me about your project or inquiry..."></textarea>
+                    
+                    <button type="submit" class="btn">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section> -->
+    <section id="contact">
+    <div class="container">
+        <h2 class="section-title">Get In Touch</h2>
+        <div class="contact-content">
+            <form class="contact-form" id="contact-form">
+                <p style="text-align: center; margin-bottom: 25px;">Ready to capture your story? Send a message.</p>
+                
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required placeholder="Your Name">
+
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required placeholder="your.email@example.com">
+
+                <label for="message">Message</label>
+                <textarea id="message" name="message" required placeholder="Tell me about your project or inquiry..."></textarea>
+                
+                <button type="submit" class="btn">Send Message</button>
+                <p id="form-status" style="text-align:center; margin-top:30px;"></p>
+            </form>
+            
+        </div>
+    </div>
+</section>
+
+<!-- EmailJS Script -->
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+  (function() {
+    emailjs.init("0H_A8EsXqQD9GC4NT"); // Replace with your Public Key
+  })();
+
+  document.getElementById("contact-form").addEventListener("submit", function(event) {
+    event.preventDefault();
+    const form = this;
+    const statusMsg = document.getElementById("form-status");
+
+    emailjs.sendForm("service_tlz56ki", "template_uuvjpni", form)
+      .then(function() {
+        statusMsg.innerText = "✅ Message sent successfully!";
+        form.reset(); // Clears form fields
+      }, function(error) {
+        statusMsg.innerText = "❌ Failed to send message. Please try again.";
+        console.error("EmailJS Error:", error);
+      });
+  });
+</script>
+
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 . All rights reserved. | Design by Sam</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Interactivity and Animation -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const header = document.getElementById('header');
+            const navLinks = document.querySelector('.nav-links');
+            const menuToggle = document.querySelector('.menu-toggle');
+            const portfolioItems = document.querySelectorAll('.portfolio-item');
+            const sections = document.querySelectorAll('section, header');
+
+            /* --- 1. Mobile Navigation Toggle --- */
+            menuToggle.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+                menuToggle.classList.toggle('active');
+            });
+            
+            // Close menu when a link is clicked
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (navLinks.classList.contains('active')) {
+                        navLinks.classList.remove('active');
+                        menuToggle.classList.remove('active');
+                    }
+                });
+            });
+
+
+            const isInViewport = (element) => {
+                const rect = element.getBoundingClientRect();
+                return (
+                    rect.top <= (window.innerHeight || document.documentElement.clientHeight) &&
+                    rect.bottom >= 0
+                );
+            };
+
+            const checkScrollReveal = () => {
+                const triggerPoint = (window.innerHeight || document.documentElement.clientHeight) * 0.90; 
+                
+                portfolioItems.forEach(item => {
+                    const itemTop = item.getBoundingClientRect().top;
+                    
+                    if (itemTop < triggerPoint) {
+                        item.classList.add('visible');
+                    }
+                });
+            };
+
+        
+            window.addEventListener('scroll', checkScrollReveal);
+            window.addEventListener('resize', checkScrollReveal);
+            
+            
+            checkScrollReveal(); 
+
+            
+            const options = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.5 
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && entry.target.id !== 'hero') {
+                        document.querySelectorAll('.nav-links a').forEach(link => {
+                            link.classList.remove('active-link');
+                            link.style.width = '0';
+                        });
+
+                        const navLink = document.querySelector(`.nav-links a[href="#${entry.target.id}"]`);
+                        if (navLink) {
+                             navLink.classList.add('active-link');
+                        }
+                    }
+                });
+            }, options);
+
+       
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+            
+            
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
+        });
+    </script>
+</body>
+</html>
+
+<!-- 
+teamplate - template_uuvjpni
+service - service_tlz56ki
+public - 0H_A8EsXqQD9GC4NT  -->
